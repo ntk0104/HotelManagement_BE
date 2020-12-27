@@ -1,0 +1,38 @@
+# viewed
+# QUESTION: can example request su dung cai nay
+parameters:
+  Pagination:
+    Query:
+      in: query
+      name: q
+      description: Query (Text search)
+      type: string
+    Filter:
+      in: query
+      name: filter
+      type: string
+      format: object
+      description: |
+        Filter
+          Example: { status: 1 }
+    Sort:
+      in: query
+      name: sort
+      type: string
+      description: |
+        Sort field
+          Example:
+            * status: Sort ASC field status
+            * -status: Sort DESC field status
+    Page:
+      in: query
+      name: page
+      type: integer
+      description: Current page
+      default: 1
+    PageSize:
+      in: query
+      name: pageSize
+      type: integer
+      description: Page size
+      default: 10

@@ -1,0 +1,132 @@
+paths:
+  /v1/auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Regiter User
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/parameters/Auth/Register'
+      responses:
+        200:
+          description: Register Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Request Status
+                    example: 'SUCCESS'
+                  data:
+                    type: object
+                    description: User info
+                    properties:
+                      email:
+                        type: string
+                        description: registration email
+                      createdBy:
+                        type: string
+                        description: email of creator
+                      createdAt:
+                        type: string
+                        description: registration time
+                    example:
+                      email: 'roynguyen147@gmail.com'
+                      createdBy: 'roynguyen147@gmail.com'
+                      createdAt: '2020-10-09T22:32:46.582Z'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/responses/BadRequest'
+              examples:
+                1. Existed Email:
+                  value: 
+                    error:
+                      code: 4001
+                      message: 'EMAIL_EXISTED'
+                2. Invalid Parameters:
+                  value: 
+                    error:
+                      code: 4000
+                      message: 'INVALID_PARAMETER'
+  /v1/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login User
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/parameters/Auth/Register'
+      responses:
+        200:
+          description: Register Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Request Status
+                    example: 'SUCCESS'
+                  data:
+                    type: object
+                    description: User token info
+                    properties:
+                      tokenType:
+                        type: string
+                        description: Token type
+                      accessToken:
+                        type: string
+                        description: accessToken
+                      refreshToken:
+                        type: string
+                        description: refreshToken
+                      expiresIn:
+                        type: string
+                        description: expiresIn of Token
+                      userId:
+                        type: string
+                        description: User Id
+                    example:
+                      tokenType: "bearer"
+                      accessToken: "eyJhbGciOey7-_P40_gVbHtaHnd78"
+                      refreshToken: "eyJhbGciOiJIU6M5j0sxiG-4PZi2O2tkbQjK8"
+                      expiresIn: 3600
+                      userId: "72522cb4-79ff-4dca-bb25-a7c50e77357f"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/responses/BadRequest'
+              examples:
+                1. Incorrect Email:
+                  value: 
+                    error:
+                      code: 4100
+                      message: 'INCORRECT_EMAIL'
+                2. Incorrect Email Or Password:
+                  value: 
+                    error:
+                      code: 4101
+                      message: 'INCORRECT_EMAIL_OR_PASSWORD'
+                3. Invalid Parameters:
+                  value: 
+                    error:
+                      code: 4000
+                      message: 'INVALID_PARAMETER'

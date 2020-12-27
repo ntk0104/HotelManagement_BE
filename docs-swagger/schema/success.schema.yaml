@@ -1,0 +1,34 @@
+# viewed
+# QUESTION: can example su dung may cai nay
+responses:
+  Success:
+    type: object
+    properties:
+      message:
+        type: string
+    example:
+      message: SUCCESS
+  Token:
+    type: object
+    properties:
+      data:
+        type: object
+        properties:
+          tokenType:
+            type: string
+            description: Token type
+          accessToken:
+            type: string
+            description: Access token
+          refreshToken:
+            type: string
+            description: Refresh token
+          expiresIn:
+            type: integer
+            description: Expires time
+    example:
+      data:
+        tokenType: bearer
+        accessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGNicy5jb20iLCJyb2xlcyI6WzFdLCJleHAiOjE1Nzg5OTI1MTZ9.-N303GhBR14O9CdaaYmA3u3s1jOTrPICfcSVbv3-Kxk
+        refreshToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZiI6MSwiaWQiOjEsImVtYWlsIjoic3VwZXJhZG1pbkBjYnMuY29tIiwicm9sZXMiOlsxXSwiZXhwIjoxNTc5NTkzNzE2fQ.V2_3K-NeStp1AAYnNZ01FpJyvdssgJ0uQXUlDbWdyoM
+        expiresIn: 3600

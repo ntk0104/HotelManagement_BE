@@ -1,0 +1,41 @@
+{
+  "development": {
+    "username": "roy",
+    "password": "admin",
+    "database": "HotelManagement",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "define": {
+      "timestamps": false
+    },
+    "query": {
+      "raw": true
+    }
+  },
+  "test": {
+    "username": "roy",
+    "password": "admin",
+    "database": "HotelManagement",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "define": {
+      "timestamps": false
+    },
+    "query": {
+      "raw": true
+    }
+  },
+  "production": {
+    "username": "roy",
+    "password": "admin",
+    "database": "HotelManagement",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "define": {
+      "timestamps": false
+    },
+    "query": {
+      "raw": true
+    }
+  }
+}

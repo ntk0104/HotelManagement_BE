@@ -1,0 +1,29 @@
+# viewed
+definitions:
+  User:
+    type: object
+    description: User info
+    properties:
+      email:
+        type: string
+        description: Email
+      password:
+        type: string
+        description: Password
+  RegistrationInformation:
+    type: object
+    description: User info
+    properties:
+      email:
+        type: string
+        description: registration email
+      createdBy:
+        type: string
+        description: email of creator
+      createdAt:
+        type: string
+        description: registration time
+    example:
+      email: 'roynguyen147@gmail.com'
+      createdBy: 'roynguyen147@gmail.com'
+      createdAt: '2020-10-09T22:32:46.582Z'

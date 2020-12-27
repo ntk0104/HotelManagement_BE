@@ -1,0 +1,20 @@
+module.exports = {
+  NODE_ENV: 'development',
+  database: {
+    host: 'localhost',
+    port: '5432',
+    database: 'HotelManagement',
+    username: 'roy',
+    password: 'admin',
+  },
+  publicUrl: 'http://localhost:8100/public/',
+  AWS_REGION: 'ap-southeast-1',
+  S3_BUCKET: 'cbsimagess',
+  adminBaseUrl: 'http://localhost:4200',
+  baseUrl: 'localhost:8200',
+  FCM_API_KEY: '',
+  FCM_SERVER_KEY: '',
+  FCM_SENDER_ID: '',
+  REDIS_URL: 'redis://127.0.0.1:6379',
+  port: 8200,
+};

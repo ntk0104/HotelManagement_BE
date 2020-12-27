@@ -1,0 +1,19 @@
+# viewed
+parameters:
+  Auth:
+    Register:
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email
+        password:
+          type: string
+          format: password
+          description: Password
+      example:
+        email: roynguyen147@gmail.com
+        password: "123456"

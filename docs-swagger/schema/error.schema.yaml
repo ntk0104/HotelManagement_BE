@@ -1,0 +1,45 @@
+# QUESTION: cho nay define tat ca cac error code  schema
+responses:
+  Unauthorized:
+    type: object
+    properties:
+      error:
+        type: object
+        properties:
+          code:
+            type: integer
+          message:
+            type: string
+        example:
+          code: 401
+          message: Unauthorized
+  BadRequest:
+    type: object
+    properties:
+      error:
+        type: object
+        properties:
+          code:
+            type: integer
+            format: 40xx
+          message:
+            type: string
+    example:
+      error:
+        code: 4000
+        message: INVALID_PARAMETER
+  NotFound:
+    type: object
+    properties:
+      error:
+        type: object
+        properties:
+          code:
+            type: integer
+            format: 44xx
+          message:
+            type: string
+    example:
+      error:
+        code: 4401
+        message: DRIVER_NOT_FOUND
