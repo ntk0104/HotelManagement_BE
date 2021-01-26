@@ -3,8 +3,8 @@
   "description": "API for Demo Project",
   "version": "1.0.0",
   "author": {
-    "name": "Thanh Duong",
-    "email": "duongdangthanh01@gmail.com"
+    "name": "Kiet Nguyen",
+    "email": "roynguyen147@gmail.com"
   },
   "engines": {
     "node": "12.13.1"
@@ -54,7 +54,8 @@
     "swagger-ui-express": "^4.1.4",
     "uuid": "^8.1.0",
     "winston": "^3.2.1",
-    "winston-daily-rotate-file": "^4.4.2"
+    "winston-daily-rotate-file": "^4.4.2",
+    "numeral": "^2.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",

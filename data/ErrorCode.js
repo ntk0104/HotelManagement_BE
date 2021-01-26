@@ -35,4 +35,9 @@ module.exports = {
     code: 4400,
     message: 'DATA_NOT_FOUND',
   },
+  // history transaction
+  ROOM_NOT_AVAILABLE: {
+    code: 4003,
+    message: 'ROOM_NOT_AVAILABLE',
+  },
 };

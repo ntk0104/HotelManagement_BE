@@ -61,9 +61,8 @@ CREATE TABLE "Membership" (
   "shorttimePrice_Air_DiscountPercentage" float NOT NULL
 );
 
-INSERT INTO "Membership" ("id","membershipName","overnight_DiscountPercentage","shorttimePrice_Fan_DiscountPercentage","shorttimePrice_Air_DiscountPercentage") VALUES ('dg', 'DG', 0, 16.7, 20);
-INSERT INTO "Membership" ("id","membershipName","overnight_DiscountPercentage","shorttimePrice_Fan_DiscountPercentage","shorttimePrice_Air_DiscountPercentage") VALUES ('cd', 'CD', 0, 0, 0);
-INSERT INTO "Membership" ("id","membershipName","overnight_DiscountPercentage","shorttimePrice_Fan_DiscountPercentage","shorttimePrice_Air_DiscountPercentage") VALUES ('qd', 'QD', 0, 0, 0);
+INSERT INTO "Membership" ("id","membershipName","overnight_DiscountPercentage","shorttimePrice_Fan_DiscountPercentage","shorttimePrice_Air_DiscountPercentage") VALUES ('dg', 'Đi giờ', 0, 16.7, 20);
+INSERT INTO "Membership" ("id","membershipName","overnight_DiscountPercentage","shorttimePrice_Fan_DiscountPercentage","shorttimePrice_Air_DiscountPercentage") VALUES ('qd', 'Qua đêm', 0, 0, 0);
 
 -- service items
 CREATE TABLE "ServiceItems" (
@@ -81,35 +80,38 @@ INSERT INTO "ServiceItems" ("id","name","unitPrice") VALUES ('coca', 'Cocacola',
 INSERT INTO "ServiceItems" ("id","name","unitPrice") VALUES ('7up', '7Ups', 15000);
 
 -- History Section - Lượt khách vào
--- status: 0: chưa trả tiền (số tiền còn lại > 0), 1: khách đã trả phòng + trả tiền, 2: khách giựt
+-- status: 0: chưa trả tiền (số tiền còn lại > 0 hay section chưa hoàn thành), 1: khách đã trả phòng + trả tiền, 2: khách giựt (1 và 2: section đã hoàn thành)
 -- userNote: note mà người dùng gõ vào
 -- systemNote: note hệ thống log do các thay đổi
 -- totalSubtractedCost: các tiền trừ đi bớt được
--- totalCost: số tiền khách hàng phải trả
-CREATE TABLE "HistorySection" (
+-- totalCost: số tiền khách hàng phải trả, số tiền này khi status = 0 (section chưa kết thúc thì luôn = 0, tiền được tính bằng công thức generate ra chứ ko phải từ DB)
+-- sectionType: ĐG (dg)/ Qua đêm (qd)
+-- sectionRoomType: phòng lạnh (air) / phòng quạt (fan)
+CREATE TABLE "HistoryTransactions" (
   "id" varchar UNIQUE PRIMARY KEY,
-  "timeIn" TIMESTAMP NOT NULL,
-  "timeOut" TIMESTAMP,
+  "timeIn" bigint NOT NULL,
+  "timeOut" bigint,
   "userNote" varchar DEFAULT '',
-  "systemNote" varchar DEFAULT '',
+  "systemNote" varchar DEFAULT '[]',
   "selectedRoomID" varchar NOT NULL REFERENCES "Rooms"("id"),
-  "usedItems" varchar DEFAULT '{}',
-  "membershipTypeID" varchar DEFAULT '' REFERENCES "Membership"("id"),
+  "usedItems" varchar DEFAULT '[]',
+  "sectionType" varchar DEFAULT '' REFERENCES "Membership"("id"),
+  "sectionRoomType" varchar DEFAULT 'air',
   "cmndImg" varchar,
-  "status" int NOT NULL,
-  "totalCost" int NOT NULL,
+  "status" int NOT NULL DEFAULT 0,
+  "totalCost" int NOT NULL DEFAULT 0,
   "totalSubtractedCost" int DEFAULT 0,
   "createdBy" varchar,
-  "createdAt" TIMESTAMP DEFAULT (now()),
+  "createdAt" bigint,
   "updatedBy" varchar,
-  "updatedAt" TIMESTAMP DEFAULT (now())
+  "updatedAt" bigint
 );
 
 -- tiền trong tủ
 -- sectionType: true:bỏ tiền vô / false: rút tiền ra
 CREATE TABLE "CashBox_Section" (
   "id" varchar UNIQUE PRIMARY KEY,
-  "sectionTime" TIMESTAMP NOT NULL,
+  "sectionTime" bigint,
   "sectionType" boolean NOT NULL,
   "updatedBy" varchar NOT NULL REFERENCES "Users"("id"),
   "beforeCash" int NOT NULL,
