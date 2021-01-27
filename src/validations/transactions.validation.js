@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import AbstractValidation from './abstract.validation';
 
-export default class TransactionValidation extends AbstractValidation {
+export default class TransactionsValidation extends AbstractValidation {
   createTransaction = () => (req, res, next) => this.validate(req.body, createTransactionSchema)(req, res, next);
 }
 
