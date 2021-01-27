@@ -25,10 +25,5 @@ export default class ItemService {
       throw ErrorCode.ITEM_NOT_EXISTED;
     }
     return selectedItem;
-    // const selectedItem = await models.ServiceItem.findOne({ where: { id: itemId } });
-    // if (!selectedItem) {
-    //   throw ErrorCode.ITEM_NOT_EXISTED;
-    // }
-    // return selectedItem.destroy();
   }
 }
