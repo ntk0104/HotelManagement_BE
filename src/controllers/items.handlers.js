@@ -18,4 +18,9 @@ export default class ItemsHandler {
     const createdItem = await this.itemsService.createItem(newItem);
     return res.success(createdItem);
   }
+
+  async handleEditItem(req, res) {
+    const editedItem = await this.itemsService.editItem(req);
+    return res.success(editedItem);
+  }
 }

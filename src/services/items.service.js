@@ -10,4 +10,11 @@ export default class ItemService {
     const serviceItems = await models.ServiceItem.create(newItem);
     return serviceItems;
   }
+
+  async editItem(req) {
+    const itemId = req.params.id;
+    await models.ServiceItem.update(req.body, { where: { id: itemId } });
+    const updatedItem = models.ServiceItem.findOne({ where: { id: itemId } });
+    return updatedItem;
+  }
 }

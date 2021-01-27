@@ -5,6 +5,8 @@ export default class ItemsValidation extends AbstractValidation {
   hasRoleAdmin = () => (req, res, next) => this.isAdmin(req.user)(req, res, next);
 
   createItem = () => (req, res, next) => this.validate(req.body, createItemSchema)(req, res, next);
+
+  editItem = () => (req, res, next) => this.validate(req.body, createItemSchema)(req, res, next);
 }
 
 const createItemSchema = Joi.object({
