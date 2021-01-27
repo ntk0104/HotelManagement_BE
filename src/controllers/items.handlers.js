@@ -23,4 +23,9 @@ export default class ItemsHandler {
     const editedItem = await this.itemsService.editItem(req);
     return res.success(editedItem);
   }
+
+  async handleDeleteItem(req, res) {
+    const deletedItem = await this.itemsService.deleteItem(req);
+    return res.success(deletedItem);
+  }
 }
