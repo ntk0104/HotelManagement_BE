@@ -13,6 +13,10 @@ export default class ItemService {
 
   async editItem(req) {
     const itemId = req.params.id;
+    const serviceItems = await models.ServiceItem.findOne({ where: { id: itemId } });
+    if (!serviceItems) {
+      throw ErrorCode.ITEM_NOT_EXISTED;
+    }
     await models.ServiceItem.update(req.body, { where: { id: itemId } });
     const updatedItem = models.ServiceItem.findOne({ where: { id: itemId } });
     return updatedItem;

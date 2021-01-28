@@ -111,12 +111,12 @@ const Helpers = {
       const { nights, hours, minutes } = durationObj;
       let durationString = '';
       if (nights > 0) {
-        durationString += `${nights} đêm-`;
+        durationString += `${nights}đêm-`;
       }
       if (hours > 0) {
-        durationString += `${hours} giờ-`;
+        durationString += `${hours}h-`;
       }
-      durationString += `${minutes} phút`;
+      durationString += `${minutes}p`;
       return durationString;
     }
     return null;
