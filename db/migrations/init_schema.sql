@@ -69,15 +69,20 @@ CREATE TABLE "ServiceItems" (
   "id" varchar UNIQUE PRIMARY KEY,
   "name" varchar NOT NULL,
   "unitPrice" int NOT NULL,
-  "availableQuanity" int DEFAULT 0
+  "availableQuanity" int DEFAULT 0,
+  "createdBy" varchar,
+  "createdAt" bigint,
+  "updatedBy" varchar,
+  "updatedAt" bigint,
+  "isDeleted" boolean DEFAULT false
 );
 
-INSERT INTO "ServiceItems" ("id","name","unitPrice") VALUES ('migoi', 'Mì gói không', 10000);
-INSERT INTO "ServiceItems" ("id","name","unitPrice") VALUES ('migoitrung', 'Mì gói trứng', 15000);
-INSERT INTO "ServiceItems" ("id","name","unitPrice") VALUES ('tiger', 'Bia Tiger', 15000);
-INSERT INTO "ServiceItems" ("id","name","unitPrice") VALUES ('heneiken', 'Bia Heneiken', 20000);
-INSERT INTO "ServiceItems" ("id","name","unitPrice") VALUES ('coca', 'Cocacola', 15000);
-INSERT INTO "ServiceItems" ("id","name","unitPrice") VALUES ('7up', '7Ups', 15000);
+INSERT INTO "ServiceItems" ("id","name","unitPrice", "createdBy", "createdAt") VALUES ('migoi', 'Mì gói không', 10000, 'roynguyen147@gmail.com', 1612320908778);
+INSERT INTO "ServiceItems" ("id","name","unitPrice", "createdBy", "createdAt") VALUES ('migoitrung', 'Mì gói trứng', 15000, 'roynguyen147@gmail.com', 1612320908779);
+INSERT INTO "ServiceItems" ("id","name","unitPrice", "createdBy", "createdAt") VALUES ('tiger', 'Bia Tiger', 15000, 'roynguyen147@gmail.com', 1612320908780);
+INSERT INTO "ServiceItems" ("id","name","unitPrice", "createdBy", "createdAt") VALUES ('heneiken', 'Bia Heneiken', 20000, 'roynguyen147@gmail.com', 1612320908781);
+INSERT INTO "ServiceItems" ("id","name","unitPrice", "createdBy", "createdAt") VALUES ('coca', 'Cocacola', 15000, 'roynguyen147@gmail.com', 1612320908782);
+INSERT INTO "ServiceItems" ("id","name","unitPrice", "createdBy", "createdAt") VALUES ('7up', '7Ups', 15000, 'roynguyen147@gmail.com', 1612320908783);
 
 -- History Section - Lượt khách vào
 -- status: 0: chưa trả tiền (số tiền còn lại > 0 hay section chưa hoàn thành), 1: khách đã trả phòng + trả tiền, 2: khách giựt (1 và 2: section đã hoàn thành)

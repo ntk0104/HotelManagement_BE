@@ -2,7 +2,9 @@ import models from '../models';
 
 export default class ItemService {
   async getServiceItems() {
-    const serviceItems = await models.ServiceItem.findAll();
+    const serviceItems = await models.ServiceItem.findAll({
+      order: ['createdAt'],
+    });
     return serviceItems;
   }
 
@@ -11,23 +13,25 @@ export default class ItemService {
     return serviceItems;
   }
 
-  async editItem(req) {
+  async editItem(req, body) {
     const itemId = req.params.id;
     const serviceItems = await models.ServiceItem.findOne({ where: { id: itemId } });
     if (!serviceItems) {
       throw ErrorCode.ITEM_NOT_EXISTED;
     }
-    await models.ServiceItem.update(req.body, { where: { id: itemId } });
+    await models.ServiceItem.update(body, { where: { id: itemId } });
     const updatedItem = models.ServiceItem.findOne({ where: { id: itemId } });
     return updatedItem;
   }
 
-  async deleteItem(req) {
+  async deleteItem(req, body) {
     const itemId = req.params.id;
-    const selectedItem = await models.ServiceItem.destroy({ where: { id: itemId } });
-    if (!selectedItem) {
+    const serviceItems = await models.ServiceItem.findOne({ where: { id: itemId } });
+    if (!serviceItems) {
       throw ErrorCode.ITEM_NOT_EXISTED;
     }
-    return selectedItem;
+    await models.ServiceItem.update(body, { where: { id: itemId } });
+    const deletedItem = models.ServiceItem.findOne({ where: { id: itemId } });
+    return deletedItem;
   }
 }

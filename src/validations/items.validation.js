@@ -10,7 +10,8 @@ export default class ItemsValidation extends AbstractValidation {
 }
 
 const createItemSchema = Joi.object({
-  name: Joi.string().required(),
-  unitPrice: Joi.number().min(1000).required(),
-  availableQuanity: Joi.number().integer().required()
+  name: Joi.string(),
+  unitPrice: Joi.number().min(1000),
+  availableQuanity: Joi.number().integer(),
+  isDeleted: Joi.boolean().optional()
 });

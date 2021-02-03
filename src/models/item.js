@@ -9,6 +9,11 @@ module.exports = (sequelize, Sequelize) => {
     name: { type: Sequelize.STRING, allowNull: false },
     unitPrice: { type: Sequelize.INTEGER, allowNull: false },
     availableQuanity: { type: Sequelize.INTEGER },
+    createdBy: { type: Sequelize.STRING },
+    createdAt: { type: 'TIMESTAMP' },
+    updatedBy: { type: Sequelize.STRING },
+    updatedAt: { type: 'TIMESTAMP' },
+    isDeleted: { type: Sequelize.BOOLEAN }
   });
   return ServiceItem;
 };
