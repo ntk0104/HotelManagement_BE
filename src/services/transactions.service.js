@@ -23,17 +23,39 @@ const formatTransactionResponse = (type, response) => {
           total: totalRoomCost,
         }
         : item));
+      const selectedRoom = await models.Room.findOne({
+        where: { id: transaction.selectedRoomID },
+      });
+      const sectionTypeDescription = `${
+        transaction.sectionType === 'dg' ? 'Đi giờ-' : 'QUA ĐÊM-'
+      }${transaction.sectionRoomType === 'fan' ? 'Quạt' : 'Lạnh'}`;
+      const systemNoteArr = JSON.parse(transaction.systemNote);
+      const remainingCost = totalCost + transaction.totalSubtractedCost;
+      // status của phòng ở thời điểm hiện tại ( thường là trả tiền trước nhưng sau 1 thời gian tiền > tiền trả trước thì phải đổi status )
+      let updatedStatus = transaction.status;
+      // nếu phòng chưa trả
+      if (transaction.status === 0 || transaction.status === 1) {
+        if (remainingCost > 0) {
+          updatedStatus = 0;
+        } else {
+          updatedStatus = 1;
+        }
+      }
       return {
         ...transaction,
+        selectedRoomName: selectedRoom.roomName,
+        selectedRoomType: selectedRoom.roomType,
+        sectionTypeDescription,
         timeIn: Number(transaction.timeIn),
         timeOut: Number(transaction.timeOut),
-        systemNote: JSON.parse(transaction.systemNote),
+        systemNote: systemNoteArr,
         usedItems: updatedUsedItems,
         createdAt: Number(transaction.createdAt),
         updatedAt: Number(transaction.updatedAt),
         livingTime: livingTimeString,
         totalCost,
-        remainingCost: totalCost - transaction.totalSubtractedCost,
+        remainingCost,
+        status: updatedStatus
       };
     });
   default:
@@ -59,20 +81,26 @@ export default class TransactionService {
       createdAt: moment.now(),
       updatedAt: moment.now(),
       createdBy: req.user.email,
+      updatedBy: req.user.email,
     };
+    const pickUpMsg = `${req.user.email}: Lấy phòng lúc ${Helpers.formatDatetime()}`;
+    systemNote.push(pickUpMsg);
     if (payload.isPaidAdvance) {
-      const paidAdvanceMsg = `Trả trước ${Helpers.formatMoney(
+      const paidAdvanceMsg = `${req.user.email}: Trả trước ${Helpers.formatMoney(
         'VND',
         payload.totalPaidAdvance
       )} vào lúc ${Helpers.formatDatetime()}`;
       systemNote.push(paidAdvanceMsg);
-      newTransaction.systemNote = JSON.stringify(systemNote);
-      newTransaction.totalSubtractedCost = payload.totalPaidAdvance;
+      newTransaction.totalSubtractedCost = -payload.totalPaidAdvance;
+      newTransaction.status = 1;
     }
+    newTransaction.systemNote = JSON.stringify(systemNote);
+    // make sure this room is not in-service - picked up by another device
     const matchingTransaction = await models.HistoryTransaction.findAll({
-      where: { selectedRoomID: payload.selectedRoomID, status: 0 },
+      where: { selectedRoomID: payload.selectedRoomID, status: { $or: [0, 1] } },
     });
     if (matchingTransaction.length > 0) {
+      // this room has already picked, cannot pick this room at this time
       throw ErrorCode.ROOM_NOT_AVAILABLE;
     }
     const createdTransaction = await models.HistoryTransaction.create(newTransaction);
@@ -86,5 +114,16 @@ export default class TransactionService {
       formatTransactionResponse('getList', filteredTransactions)
     );
     return formatedResponse;
+  }
+
+  async updateTransaction(req, body) {
+    const transactionId = req.params.id;
+    const transactions = await models.HistoryTransaction.findOne({ where: { id: transactionId } });
+    if (!transactions) {
+      throw ErrorCode.ITEM_NOT_EXISTED;
+    }
+    await models.HistoryTransaction.update(body, { where: { id: transactionId } });
+    const updatedTransaction = models.HistoryTransaction.findOne({ where: { id: transactionId } });
+    return updatedTransaction;
   }
 }

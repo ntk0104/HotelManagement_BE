@@ -54,6 +54,7 @@ export default class UserService {
     });
     return {
       ...userData,
+      email: data.email.toLowerCase(),
       userId: _.get(matchingUser, 'id', ''),
       userType
     };

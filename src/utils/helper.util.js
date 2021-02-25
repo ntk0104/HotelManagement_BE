@@ -224,7 +224,8 @@ const Helpers = {
     const {
       sectionType, timeIn, selectedRoomID, status, totalCost, sectionRoomType
     } = transaction;
-    if (status !== 0) {
+    // nếu khách đã trả phòng/ transaction đã hoàn thành
+    if (status > 1) {
       return totalCost;
     }
     const additionalPrice = sectionRoomType === 'fan'
@@ -259,7 +260,9 @@ const Helpers = {
     sumCost += roomCost;
     const usedItemsList = JSON.parse(usedItems);
     usedItemsList.forEach((item) => {
-      sumCost += item.total;
+      if (item.id !== 'roomCost') {
+        sumCost += item.total;
+      }
     });
     return sumCost;
   },

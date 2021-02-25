@@ -85,7 +85,7 @@ INSERT INTO "ServiceItems" ("id","name","unitPrice", "createdBy", "createdAt") V
 INSERT INTO "ServiceItems" ("id","name","unitPrice", "createdBy", "createdAt") VALUES ('7up', '7Ups', 15000, 'roynguyen147@gmail.com', 1612320908783);
 
 -- History Section - Lượt khách vào
--- status: 0: chưa trả tiền (số tiền còn lại > 0 hay section chưa hoàn thành), 1: khách đã trả phòng + trả tiền, 2: khách giựt (1 và 2: section đã hoàn thành)
+-- status: 0: chưa trả đủ tiền và chưa trả phòng, 1: khách chưa trả phòng nhưng tiền đã trả đủ, 2: khách đã trả phòng + trả tiền, 3: khách đã trả phòng + khách giựt tiền (2 và 3: section đã hoàn thành)
 -- userNote: note mà người dùng gõ vào
 -- systemNote: note hệ thống log do các thay đổi
 -- totalSubtractedCost: các tiền trừ đi bớt được
