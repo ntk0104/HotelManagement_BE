@@ -24,4 +24,15 @@ export default class TransactionsHandler {
     const updatedTransaction = await this.transactionsService.updateTransaction(req, updatedBody);
     return res.success(updatedTransaction);
   }
+
+  async handleCheckoutTransaction(req, res) {
+    const updatedBody = {
+      ...req.body,
+      updatedAt: moment.now(),
+      // checkout thì người tính tiền không phải là người cuối cùng update - mục đích là để chủ kiểm soát nhanh coi nhân viên có lén bớt tiền phòng xuống để ăn chênh lệch hay ko
+      // updatedBy: req.user.email
+    };
+    const updatedTransaction = await this.transactionsService.updateTransaction(req, updatedBody);
+    return res.success(updatedTransaction);
+  }
 }
