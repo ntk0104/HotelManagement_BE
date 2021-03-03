@@ -15,6 +15,11 @@ export default class TransactionsHandler {
     return res.success(filteredTransaction);
   }
 
+  async getTimeLine(req, res) {
+    const timeline = await this.transactionsService.getTimeline(req);
+    return res.success(timeline);
+  }
+
   async handleUpdateTransaction(req, res) {
     const updatedBody = {
       ...req.body,

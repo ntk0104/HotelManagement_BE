@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { v4 as uuidv4 } from 'uuid';
 import moment from 'moment';
 import _ from 'lodash';
@@ -58,6 +59,47 @@ const formatTransactionResponse = (type, response) => {
         status: updatedStatus
       };
     });
+  case 'formatTimeLineResponse':
+    // các cameIn transaction, transaction chưa hoàn thành hay hoàn thành cũng có timeIn
+    const cameInTransactions = response.map(async (transaction) => {
+      const selectedRoom = await models.Room.findOne({
+        where: { id: transaction.selectedRoomID },
+      });
+      return {
+        transactionId: transaction.id,
+        sectionType: transaction.sectionType,
+        sectionRoomType: transaction.sectionRoomType,
+        updatedBy: transaction.updatedBy,
+        type: 'in',
+        timeDisplay: Helpers.formatHour(Number(transaction.timeIn)),
+        // use for sorting
+        timeFlag: Number(transaction.timeIn),
+        remainingCost: 0,
+        selectedRoomName: selectedRoom.roomName,
+      };
+    });
+      // chỉ có các transaction hoàn thành mới có timeOut
+    const leftTransactions = response
+      .filter((transaction) => transaction.status > 1)
+      .map(async (transaction) => {
+        const selectedRoom = await models.Room.findOne({
+          where: { id: transaction.selectedRoomID },
+        });
+        return {
+          transactionId: transaction.id,
+          sectionType: transaction.sectionType,
+          sectionRoomType: transaction.sectionRoomType,
+          updatedBy: transaction.updatedBy,
+          type: 'out',
+          timeDisplay: Helpers.formatHour(Number(transaction.timeOut)),
+          // use for sorting
+          timeFlag: Number(transaction.timeOut),
+          remainingCost: transaction.totalCost + transaction.totalSubtractedCost,
+          selectedRoomName: selectedRoom.roomName,
+        };
+      });
+    const timeLineData = [...leftTransactions, ...cameInTransactions]
+    return timeLineData;
   default:
     return null;
   }
@@ -114,6 +156,16 @@ export default class TransactionService {
       formatTransactionResponse('getList', filteredTransactions)
     );
     return formatedResponse;
+  }
+
+  async getTimeline(req) {
+    // const filteredParams = req.query;
+    const timeLineData = await models.HistoryTransaction.findAll({
+      order: [['updatedAt', 'DESC']],
+      limit: 100,
+    });
+    const formatedResponse = await Promise.all(formatTransactionResponse('formatTimeLineResponse', timeLineData));
+    return formatedResponse.sort((t1, t2) => t2.timeFlag - t1.timeFlag);
   }
 
   async updateTransaction(req, body) {

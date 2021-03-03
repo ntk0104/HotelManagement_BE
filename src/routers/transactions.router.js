@@ -10,5 +10,7 @@ module.exports = ({ transactionsHandlers, intercept, transactionsValidation }) =
   router.put('/checkout/:id', intercept(transactionsHandlers, 'handleCheckoutTransaction'));
   // Get transaction with filter ability
   router.get('/', intercept(transactionsHandlers, 'getTransaction'));
+  // get transaction in/out
+  router.get('/timeline', intercept(transactionsHandlers, 'getTimeLine'));
   return router;
 };

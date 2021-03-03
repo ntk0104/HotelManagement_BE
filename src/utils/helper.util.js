@@ -104,6 +104,12 @@ const Helpers = {
     }
     return moment().format('DD/MM/YYYY HH:mm');
   },
+  formatHour(time) {
+    if (time) {
+      return moment(time).format('HH:mm');
+    }
+    return moment().format('HH:mm');
+  },
   generateLivingDuration(timestampIn, tspOut) {
     const timestampOut = Number(tspOut) > 0 ? Number(tspOut) : Number(moment().valueOf());
     if (timestampIn !== 0) {
