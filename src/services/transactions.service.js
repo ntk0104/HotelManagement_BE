@@ -76,6 +76,7 @@ const formatTransactionResponse = (type, response) => {
         timeFlag: Number(transaction.timeIn),
         remainingCost: 0,
         selectedRoomName: selectedRoom.roomName,
+        status: transaction.status
       };
     });
       // chỉ có các transaction hoàn thành mới có timeOut
@@ -96,6 +97,7 @@ const formatTransactionResponse = (type, response) => {
           timeFlag: Number(transaction.timeOut),
           remainingCost: transaction.totalCost + transaction.totalSubtractedCost,
           selectedRoomName: selectedRoom.roomName,
+          status: transaction.status
         };
       });
     const timeLineData = [...leftTransactions, ...cameInTransactions]
