@@ -44,5 +44,10 @@ module.exports = {
   ITEM_NOT_EXISTED: {
     code: 4004,
     message: 'ITEM_NOT_EXISTED',
+  },
+  // cashbox
+  WITHDRAW_OVER_CASH: {
+    code: 4005,
+    message: 'WITHDRAW_OVER_CASH',
   }
 };

@@ -113,13 +113,22 @@ CREATE TABLE "HistoryTransactions" (
 );
 
 -- tiền trong tủ
--- sectionType: true:bỏ tiền vô / false: rút tiền ra
-CREATE TABLE "CashBox_Section" (
+-- type: true:bỏ tiền vô / false: rút tiền ra
+-- isChecked: true: là admin chốt tiền/ false: tiền từ các nguồn khác
+-- baselineAmount: số tiền còn lại thực tế trong tủ tại thời điểm chốt tiền 
+
+CREATE TABLE "CashboxTransactions" (
   "id" varchar UNIQUE PRIMARY KEY,
-  "sectionTime" bigint,
-  "sectionType" boolean NOT NULL,
-  "updatedBy" varchar NOT NULL REFERENCES "Users"("id"),
-  "beforeCash" int NOT NULL,
-  "afterCash" int NOT NULL,
-  "userNote" varchar DEFAULT ''
+  "type" boolean NOT NULL,
+  "changedCash" int NOT NULL,
+  "note" varchar DEFAULT '',
+  "isChecked" boolean DEFAULT false,
+  "baselineAmount" int DEFAULT 0,
+  "createdBy" varchar,
+  "createdAt" bigint,
+  "updatedBy" varchar,
+  "updatedAt" bigint
 );
+
+INSERT INTO "CashboxTransactions" ("id","type","changedCash", "note", "isChecked", "baselineAmount","createdBy", "createdAt", "updatedBy", "updatedAt") 
+                          VALUES ('1', false, 0, 'Chốt tiền', true, 0, 'roynguyen147@gmail.com', 1, 'roynguyen147@gmail.com', 1);
