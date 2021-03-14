@@ -34,7 +34,7 @@ CREATE TABLE "Rooms" (
   "updatedAt" TIMESTAMP DEFAULT (now())
 );
 
-INSERT INTO "Rooms" ("id","roomName","roomType","overnightPrice","shorttimePrice_Fan", "shorttimePrice_Air") VALUES ('room18', 'Phòng 18', 3, 100000, 60000, 100000);
+INSERT INTO "Rooms" ("id","roomName","roomType","overnightPrice","shorttimePrice_Fan", "shorttimePrice_Air") VALUES ('room18', 'Phòng 18', 3, 100000, 60000, 60000);
 INSERT INTO "Rooms" ("id","roomName","roomType","overnightPrice","shorttimePrice_Fan", "shorttimePrice_Air") VALUES ('room09', 'Phòng 9', 2, 150000, 60000, 100000);
 INSERT INTO "Rooms" ("id","roomName","roomType","overnightPrice","shorttimePrice_Fan", "shorttimePrice_Air") VALUES ('room10', 'Phòng 10', 1, 180000, 60000, 100000);
 INSERT INTO "Rooms" ("id","roomName","roomType","overnightPrice","shorttimePrice_Fan", "shorttimePrice_Air") VALUES ('room11', 'Phòng 11', 1, 200000, 60000, 100000);
@@ -44,7 +44,7 @@ INSERT INTO "Rooms" ("id","roomName","roomType","overnightPrice","shorttimePrice
 INSERT INTO "Rooms" ("id","roomName","roomType","overnightPrice","shorttimePrice_Fan", "shorttimePrice_Air") VALUES ('room15', 'Phòng 15', 2, 150000, 60000, 100000);
 INSERT INTO "Rooms" ("id","roomName","roomType","overnightPrice","shorttimePrice_Fan", "shorttimePrice_Air") VALUES ('room16', 'Phòng 16', 2, 180000, 60000, 100000);
 INSERT INTO "Rooms" ("id","roomName","roomType","overnightPrice","shorttimePrice_Fan", "shorttimePrice_Air") VALUES ('room17', 'Phòng 17', 0, 150000, 60000, 100000);
-INSERT INTO "Rooms" ("id","roomName","roomType","overnightPrice","shorttimePrice_Fan", "shorttimePrice_Air") VALUES ('room08', 'Phòng 8', 3, 100000, 60000, 100000);
+INSERT INTO "Rooms" ("id","roomName","roomType","overnightPrice","shorttimePrice_Fan", "shorttimePrice_Air") VALUES ('room08', 'Phòng 8', 3, 100000, 60000, 60000);
 INSERT INTO "Rooms" ("id","roomName","roomType","overnightPrice","shorttimePrice_Fan", "shorttimePrice_Air") VALUES ('room07', 'Phòng 7', 0, 150000, 60000, 100000);
 INSERT INTO "Rooms" ("id","roomName","roomType","overnightPrice","shorttimePrice_Fan", "shorttimePrice_Air") VALUES ('room06', 'Phòng 6', 1, 200000, 60000, 100000);
 INSERT INTO "Rooms" ("id","roomName","roomType","overnightPrice","shorttimePrice_Fan", "shorttimePrice_Air") VALUES ('room05', 'Phòng 5', 1, 200000, 60000, 100000);
@@ -79,10 +79,9 @@ CREATE TABLE "ServiceItems" (
 
 INSERT INTO "ServiceItems" ("id","name","unitPrice", "createdBy", "createdAt") VALUES ('migoi', 'Mì gói không', 10000, 'roynguyen147@gmail.com', 1612320908778);
 INSERT INTO "ServiceItems" ("id","name","unitPrice", "createdBy", "createdAt") VALUES ('migoitrung', 'Mì gói trứng', 15000, 'roynguyen147@gmail.com', 1612320908779);
-INSERT INTO "ServiceItems" ("id","name","unitPrice", "createdBy", "createdAt") VALUES ('tiger', 'Bia Tiger', 15000, 'roynguyen147@gmail.com', 1612320908780);
+INSERT INTO "ServiceItems" ("id","name","unitPrice", "createdBy", "createdAt") VALUES ('biathuong', 'Bia Thường', 15000, 'roynguyen147@gmail.com', 1612320908780);
 INSERT INTO "ServiceItems" ("id","name","unitPrice", "createdBy", "createdAt") VALUES ('heneiken', 'Bia Heneiken', 20000, 'roynguyen147@gmail.com', 1612320908781);
-INSERT INTO "ServiceItems" ("id","name","unitPrice", "createdBy", "createdAt") VALUES ('coca', 'Cocacola', 15000, 'roynguyen147@gmail.com', 1612320908782);
-INSERT INTO "ServiceItems" ("id","name","unitPrice", "createdBy", "createdAt") VALUES ('7up', '7Ups', 15000, 'roynguyen147@gmail.com', 1612320908783);
+INSERT INTO "ServiceItems" ("id","name","unitPrice", "createdBy", "createdAt") VALUES ('nuocngot', 'Nước ngọt', 15000, 'roynguyen147@gmail.com', 1612320908782);
 
 -- History Section - Lượt khách vào
 -- status: 0: chưa trả đủ tiền và chưa trả phòng, 1: khách chưa trả phòng nhưng tiền đã trả đủ, 2: khách đã trả phòng + trả tiền, 3: khách đã trả phòng + khách giựt tiền (2 và 3: section đã hoàn thành)

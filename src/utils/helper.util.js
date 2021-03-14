@@ -1,6 +1,5 @@
 import Numeral from 'numeral';
 import moment from 'moment';
-import { sum } from 'lodash';
 import models from '../models/index';
 
 const NUMERAL_K = '0[.][000]a';
@@ -81,19 +80,18 @@ const Helpers = {
     if (value !== undefined) {
       const number = Number(value);
       switch (ios) {
-      case 'AUD':
-      case 'USD':
-        return number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-      case 'VND':
-        if (number < 1000000) {
-          return Numeral(number).format(ROUND_NUMERAL_K).toUpperCase();
-        }
-        return Numeral(number).format(NUMERAL_K).split('.').join(',')
-          .toUpperCase();
-      case 'JPY':
-        return Numeral(number).format(NUMERAL_K);
-      default:
-        return number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        case 'AUD':
+        case 'USD':
+          return number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        case 'VND':
+          if (number < 1000000) {
+            return Numeral(number).format(ROUND_NUMERAL_K).toUpperCase();
+          }
+          return Numeral(number).format(NUMERAL_K).split('.').join(',').toUpperCase();
+        case 'JPY':
+          return Numeral(number).format(NUMERAL_K);
+        default:
+          return number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
       }
     }
     return undefined;
@@ -109,6 +107,11 @@ const Helpers = {
       return moment(time).format('HH:mm');
     }
     return moment().format('HH:mm');
+  },
+  getRangeTimestampForDate(dateString) {
+    const startingDatetsp = moment(`${dateString} 00:00:00`, 'DD/MM/YYYY hh:mm:ss').valueOf();
+    const endingDatetsp = moment(`${dateString} 23:59:59`, 'DD/MM/YYYY hh:mm:ss').valueOf();
+    return { start: startingDatetsp, end: endingDatetsp };
   },
   generateLivingDuration(timestampIn, tspOut) {
     const timestampOut = Number(tspOut) > 0 ? Number(tspOut) : Number(moment().valueOf());
@@ -152,7 +155,8 @@ const Helpers = {
     }
     const livingTimeToSecs = hours * 3600 + minutes * 60;
     const limitSectionToSecs = limitHourOfSection1 * 3600 + bufferTime * 60;
-    const limitSectionToOvernightToSecs = limitHourSectionToOvernightInHour * 3600 + bufferTime * 60;
+    const limitSectionToOvernightToSecs =
+      limitHourSectionToOvernightInHour * 3600 + bufferTime * 60;
     if (livingTimeToSecs > limitSectionToSecs) {
       if (livingTimeToSecs > limitSectionToOvernightToSecs) {
         return overnightPrice;
@@ -193,8 +197,8 @@ const Helpers = {
       const generatedTimeOutThreshold = `${currentDate} 12:${bufferTime}:00`;
       const generatedTimestampOutThreshold = moment(generatedTimeOutThreshold).valueOf();
       if (
-        timestampOut > generatedTimestampOutThreshold
-        && timestampIn < generatedTimeInstampThreshold
+        timestampOut > generatedTimestampOutThreshold &&
+        timestampIn < generatedTimeInstampThreshold
       ) {
         const additionalHourCost = this.calculateRoomCostPerHour(
           moment(`${currentDate} 12:00:00`).valueOf(),
@@ -227,18 +231,18 @@ const Helpers = {
   },
   // dùng để tính tiền phòng only
   async calculateTransactionRoomCost(transaction) {
-    const {
-      sectionType, timeIn, selectedRoomID, status, totalCost, sectionRoomType
-    } = transaction;
+    const { sectionType, timeIn, selectedRoomID, status, totalCost, sectionRoomType } = transaction;
     // nếu khách đã trả phòng/ transaction đã hoàn thành
     if (status > 1) {
       return totalCost;
     }
-    const additionalPrice = sectionRoomType === 'fan'
-      ? appConfig.fanHourAdditionalPrice
-      : appConfig.airHourAdditionalPrice;
+    const additionalPrice =
+      sectionRoomType === 'fan'
+        ? appConfig.fanHourAdditionalPrice
+        : appConfig.airHourAdditionalPrice;
     const selectedRoom = await models.Room.findOne({ where: { id: selectedRoomID } });
-    const sectionPrice = sectionRoomType === 'fan' ? selectedRoom.shorttimePrice_Fan : selectedRoom.shorttimePrice_Air;
+    const sectionPrice =
+      sectionRoomType === 'fan' ? selectedRoom.shorttimePrice_Fan : selectedRoom.shorttimePrice_Air;
     // const
     if (sectionType === 'qd') {
       const roomCost = this.calculateRoomCostOvernight(

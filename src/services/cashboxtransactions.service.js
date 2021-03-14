@@ -23,11 +23,10 @@ export default class CashboxTransactionService {
         if (payload.changedCash > currentMoney) {
           throw ErrorCode.WITHDRAW_OVER_CASH;
         }
-        newTransaction.baselineAmount = currentMoney - payload.changedCash;
-      }
-      // them tien vao de chot tien
-      else {
-        newTransaction.baselineAmount = currentMoney + payload.changedCash;
+        newTransaction.baselineAmount = currentMoney - Number(payload.changedCash);
+      } else {
+        // them tien vao de chot tien
+        newTransaction.baselineAmount = currentMoney + Number(payload.changedCash);
       }
       newTransaction.note = 'Chốt tiền';
     }
